@@ -11,7 +11,8 @@ library(broom)
 
 ## 1. Introduction
 
-Text goes here. Refer to the Markdown Quick Reference: Help -> Markdown Quick Reference. 
+Our data comes from the Promise Early Education Programs: Early Head Start and Head Start. They focus on children who come from low-income families and provide them with high quality early education. The program system uses GOLD assessment, evaluating the children through catergories of Physical Examination, Language, Cognitive, Social-Emotional, Literacy and Mathematics. 
+For our project, we are focusing on the question of "What trends exist in social-emotional and behavioral development?" We will be using the data sets from both EHS and HS looking at the categories of Language, Cognitive and Literacy.  
 
 ## 2. Data
 
