@@ -2,6 +2,9 @@
 
 Place data file(s) in this folder.
 
+```{r
+FWSdata <- read_csv(file = "data-raw/nobel.csv")}
+
 Then, include codebooks (variables, and their descriptions) for your data file(s)
 using the following format.
 

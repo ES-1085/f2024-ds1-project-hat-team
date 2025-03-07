@@ -7,6 +7,7 @@ output: html_document
 ```{r load-packages, message = FALSE}
 library(tidyverse)
 library(broom)
+library(readxl)
 ```
 
 ## 1. Introduction
@@ -19,7 +20,7 @@ For our project, we are focusing on the question of "What trends exist in social
 Text goes here.
 
 ```{r}
-# Code goes here
+write_csv(2021-2022_FWS_Data_deidentified_for_BATES_-_EHS_FWS_2021-2022, file = "2021-2022_FWS_Data_deidentified_for_BATES_-_EHS_FWS_2021-2022.csv")
 ```
 
 ## 3. Data analysis plan
