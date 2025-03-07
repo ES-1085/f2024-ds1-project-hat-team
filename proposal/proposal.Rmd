@@ -17,7 +17,7 @@ For our project, we are focusing on the question of "What trends exist in social
 
 ## 2. Data
 
-Text goes here.
+Part of our longer term data analysis is figuring out how to wrangle this raw data and understand how to present it in a way that R can read. It is complicated and arranged in ways that are not suitable for R dataframes at this point.
 
 ```{r}
 write_csv(2021-2022_FWS_Data_deidentified_for_BATES_-_EHS_FWS_2021-2022, file = "2021-2022_FWS_Data_deidentified_for_BATES_-_EHS_FWS_2021-2022.csv")
@@ -25,7 +25,9 @@ write_csv(2021-2022_FWS_Data_deidentified_for_BATES_-_EHS_FWS_2021-2022, file = 
 
 ## 3. Data analysis plan
 
-Text goes here.
+In our categories that we are analyzing, we will be looking at how the percentages of students below, meeting, and exceeding expectations changes throughout a year. We will also look to see if there are correlations between the growth/decline of students in multiple categories. We plan to analyze the difference in trends between the Early Head Start Program and the Head Start Program. We plan on doing this by using histograms, bar plots, and faceting them to compare different sets of data.
+
+Our data still requires a lot of cleaning, so we do not have any preliminary visualizations. However, just by looking at the raw data, we notice some positive trends in students meeting/exceeding expectations throughout the school year.
 
 
 ```{r}
