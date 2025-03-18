@@ -19,10 +19,16 @@ Our data comes from the Promise Early Education Programs: Early Head Start and H
 
 Part of our longer term data analysis is figuring out how to wrangle this raw data and understand how to present it in a way that R can read. It is complicated and arranged in ways that are not suitable for R dataframes at this point.
 
-```{r}
+```{r data-cleanup}
 fall_2018_19_data <- read_excel("../data/2018-19 promise data.xlsx", 
     sheet = "3-4", range = "A3:I81") |>
-  janitor::clean_names()
+  janitor::clean_names() |>
+  rename("category" = "x1")
+
+fall_2018_19_data[1,1] <- "Social-Emotional"
+
+fall_2018_19_data <- fall_2018_19_data |>
+  filter(!category %in% c("Threes SE", "Threes")) 
 
 
 ```
