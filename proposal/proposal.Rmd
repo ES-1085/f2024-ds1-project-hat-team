@@ -19,7 +19,7 @@ Our data comes from the Promise Early Education Programs: Early Head Start and H
 
 Part of our longer term data analysis is figuring out how to wrangle this raw data and understand how to present it in a way that R can read. It is complicated and arranged in ways that are not suitable for R dataframes at this point.
 
-```{r data-cleanup}
+```{r fall-data-cleanup}
 fall_2018_19_data <- read_excel("../data/2018-19 promise data.xlsx", 
     sheet = "3-4", range = "A3:I81") |>
   janitor::clean_names() |>
@@ -30,7 +30,120 @@ fall_2018_19_data[1,1] <- "Social-Emotional"
 fall_2018_19_data <- fall_2018_19_data |>
   filter(!category %in% c("Threes SE", "Threes")) 
 
+fall_2018_19_data <- fall_2018_19_data |>
+  fill(category, .direction = "down") |>
+  drop_na(bottom)
 
+fall_2018_19_data <- fall_2018_19_data |>
+  filter(!bottom %in% c("Widely Held Expectations", "Bottom"))
+
+fall_2018_19_data <- fall_2018_19_data |>
+  mutate(season = "Fall") |>
+  mutate(year = "18-19")
+
+fall_2018_19_data$percent_meeting_exceeding <- as.numeric(fall_2018_19_data$percent_meeting_exceeding)
+
+fall_2018_19_data$percent_below[1] <- 100
+fall_2018_19_data$number_meeting_exceeding[1] <- 0
+
+fall_2018_19_data <- fall_2018_19_data |>
+  mutate(across(c(bottom, top, number_children, average, number_below, percent_below, number_meeting_exceeding, percent_meeting_exceeding), as.numeric))
+
+
+fall_2018_19_data[is.na(fall_2018_19_data)] <- 0
+
+
+fall_2018_19_mean <- fall_2018_19_data |>
+  group_by(category) |>
+  summarize_at(vars("percent_meeting_exceeding"), mean, na.rm = TRUE)
+```
+
+```{r winter-data-cleanup}
+winter_2018_19_data <- read_excel("../data/2018-19 promise data.xlsx", 
+    sheet = "3-4", range = "J3:O80")
+
+expectations <- read_excel("../data/2018-19 promise data.xlsx", 
+    sheet = "3-4", range = "A3:C80")
+
+
+winter_2018_19_data <- cbind(expectations, winter_2018_19_data) |>
+    janitor::clean_names()
+
+winter_2018_19_data <- winter_2018_19_data |>
+  rename(`category` = `x1`)
+
+winter_2018_19_data[1, 1] <- "Social-Emotional"
+
+winter_2018_19_data <- winter_2018_19_data |>
+  filter(!category %in% c("Threes SE", "Threes")) 
+
+winter_2018_19_data <- winter_2018_19_data |>
+  fill(category, .direction = "down") |>
+  drop_na(bottom)
+
+winter_2018_19_data <- winter_2018_19_data |>
+  filter(!bottom %in% c("Widely Held Expectations", "Bottom"))
+
+winter_2018_19_data <- winter_2018_19_data |>
+  mutate(season = "Winter") |>
+   mutate(year = "18-19")
+
+winter_2018_19_data$percent_meeting_exceeding <- as.numeric(winter_2018_19_data$percent_meeting_exceeding)
+
+winter_2018_19_data <- winter_2018_19_data |>
+  mutate(across(c(bottom, top, number_children, average, number_below, percent_below, number_meeting_exceeding, percent_meeting_exceeding), as.numeric))
+
+winter_2018_19_data[is.na(winter_2018_19_data)] <- 0
+
+winter_2018_19_mean <- winter_2018_19_data |>
+  group_by(category) |>
+  summarize_at(vars("percent_meeting_exceeding"), mean, na.rm = TRUE)
+```
+
+```{r spring-data-cleanup}
+spring_2018_19_data <- read_excel("../data/2018-19 promise data.xlsx", 
+    sheet = "3-4", range = "P3:U80")
+
+spring_2018_19_data <- cbind(expectations, spring_2018_19_data) |>
+    janitor::clean_names()
+
+
+spring_2018_19_data <- spring_2018_19_data |>
+  rename(`category` = `x1`)
+
+spring_2018_19_data[1, 1] <- "Social-Emotional"
+
+
+spring_2018_19_data <- spring_2018_19_data |>
+  filter(!category %in% c("Threes SE", "Threes")) 
+
+spring_2018_19_data <- spring_2018_19_data |>
+  fill(category, .direction = "down") |>
+  drop_na(bottom)
+
+spring_2018_19_data <- spring_2018_19_data |>
+  filter(!bottom %in% c("Widely Held Expectations", "Bottom"))
+
+spring_2018_19_data <- spring_2018_19_data |>
+  mutate(season = "Spring") |>
+   mutate(year = "18-19")
+
+spring_2018_19_data$percent_meeting_exceeding <- as.numeric(spring_2018_19_data$percent_meeting_exceeding)
+
+spring_2018_19_data <- spring_2018_19_data |>
+  mutate(across(c(bottom, top, number_children, average, number_below, percent_below, number_meeting_exceeding, percent_meeting_exceeding), as.numeric))
+
+spring_2018_19_data[is.na(spring_2018_19_data)] <- 0
+
+spring_2018_19_mean <- spring_2018_19_data |>
+  group_by(category) |>
+  summarize_at(vars("percent_meeting_exceeding"), mean, na.rm = TRUE)
+```
+
+```{r data-joining}
+data_2018_19 <- rbind(fall_2018_19_data, winter_2018_19_data, spring_2018_19_data)
+
+write.csv(data_2018_19, "../data/final_data.csv")
 ```
 
 ## 3. Data analysis plan
@@ -40,7 +153,7 @@ In our categories that we are analyzing, we will be looking at how the percentag
 Our data still requires a lot of cleaning, so we do not have any preliminary visualizations. However, just by looking at the raw data, we notice some positive trends in students meeting/exceeding expectations throughout the school year.
 
 ```{r}
-# Code goes here
+
 ```
 
 ## 4. Data Ethics Review
