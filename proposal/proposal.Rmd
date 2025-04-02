@@ -169,6 +169,7 @@ ggplot(data_2018_19, aes(x = season, y = percent_meeting_exceeding, group = cate
   theme(axis.text.x = element_text(angle = 45, hjust = 1), 
         legend.title = element_blank())
 
+ggsave("season_trend_2018_19.jpeg", path = "../data")
 ```
 
 ## 4. Data Ethics Review
