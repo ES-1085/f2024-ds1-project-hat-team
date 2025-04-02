@@ -10,6 +10,7 @@ library(broom)
 library(readxl)
 library(janitor)
 library(forcats)
+library(dplyr)
 ```
 
 ## 1. Introduction
@@ -156,17 +157,17 @@ Our data still requires a lot of cleaning, so we do not have any preliminary vis
 ```{r totals-by-season}
 data_2018_19$season <- fct_relevel(data_2018_19$season, "Fall", "Winter", "Spring")
 
-ggplot(data_2018_19, aes(x = category, y = number_meeting_exceeding, fill = season)) +
-  stat_summary(fun = "sum", geom = "bar") +
-  labs(title = "Total Children Meeting/Exceeding Expectations by Category", 
-       subtitle = "Arranged by Season", 
-       x = "Category", 
-       y = "Total Count") +
-  facet_wrap(~ season, nrow = 1) +
-  scale_fill_brewer(palette = "Set2") +  # Aesthetic color palette
+ggplot(data_2018_19, aes(x = season, y = percent_meeting_exceeding, group = category, color = category)) +
+  stat_summary(fun = "mean", geom = "line", linewidth = 1.2) +  # Line for each category
+  stat_summary(fun = "mean", geom = "point", linewidth = 3) +  # Points to highlight means
+  labs(title = "Trend of Percent Meeting/Exceeding Expectations by Category", 
+       subtitle = "Across 2018-19 Seasons", 
+       x = "Season", 
+       y = "Percent Meeting/Exceeding") +
+  scale_color_brewer(palette = "Set2") +  # Aesthetic color palette
   theme_minimal() + 
   theme(axis.text.x = element_text(angle = 45, hjust = 1), 
-        legend.position = "none")
+        legend.title = element_blank())
 
 ```
 
