@@ -9,6 +9,7 @@ library(tidyverse)
 library(broom)
 library(readxl)
 library(janitor)
+library(forcats)
 ```
 
 ## 1. Introduction
@@ -152,7 +153,20 @@ In our categories that we are analyzing, we will be looking at how the percentag
 
 Our data still requires a lot of cleaning, so we do not have any preliminary visualizations. However, just by looking at the raw data, we notice some positive trends in students meeting/exceeding expectations throughout the school year.
 
-```{r}
+```{r totals-by-season}
+data_2018_19$season <- fct_relevel(data_2018_19$season, "Fall", "Winter", "Spring")
+
+ggplot(data_2018_19, aes(x = category, y = number_meeting_exceeding, fill = season)) +
+  stat_summary(fun = "sum", geom = "bar") +
+  labs(title = "Total Children Meeting/Exceeding Expectations by Category", 
+       subtitle = "Arranged by Season", 
+       x = "Category", 
+       y = "Total Count") +
+  facet_wrap(~ season, nrow = 1) +
+  scale_fill_brewer(palette = "Set2") +  # Aesthetic color palette
+  theme_minimal() + 
+  theme(axis.text.x = element_text(angle = 45, hjust = 1), 
+        legend.position = "none")
 
 ```
 
