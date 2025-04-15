@@ -350,7 +350,7 @@ social_emotional_data <- HS_2018_19_data %>%
 social_emotional_data$season <- fct_relevel(social_emotional_data$season, "Fall", "Winter", "Spring")
 
 # --- Plot 1: Grouped Line Plot for Mean Trends ---
-line_plot <- ggplot(social_emotional_data, aes(x = season, y = percent_meeting_exceeding, 
+ggplot(social_emotional_data, aes(x = season, y = percent_meeting_exceeding, 
                                                group = age_group, color = age_group)) +
   stat_summary(fun = mean, geom = "line", linewidth = 1.2) +
   stat_summary(fun = mean, geom = "point", size = 3) +
@@ -363,9 +363,6 @@ line_plot <- ggplot(social_emotional_data, aes(x = season, y = percent_meeting_e
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
 ggsave("2018_19_3_4_vs_4_5_line_plot.jpeg", path = "../memo")
-
-line_plot
-
 ```
 ```{r box-plot, fig.alt="Faceted boxplot showing the distribution of social-emotional scores by age group across Fall, Winter, and Spring of 2018–19. The x-axis shows age groups (3–4 and 4–5), and the y-axis shows percent meeting or exceeding expectations. Each panel represents a season. Boxplots use viridis colors and show central tendency and variability within each group-season pair. Once again, the 3-4 age group shows higher social-emotional scores overall."}
 
@@ -377,7 +374,7 @@ social_emotional_data <- HS_2018_19_data %>%
 social_emotional_data$season <- fct_relevel(social_emotional_data$season, "Fall", "Winter", "Spring")
 
 # --- Plot 2: Faceted Boxplot with Jittered Points ---
-box_jitter_plot <- ggplot(social_emotional_data, aes(x = age_group, y = percent_meeting_exceeding, fill = age_group)) +
+ggplot(social_emotional_data, aes(x = age_group, y = percent_meeting_exceeding, fill = age_group)) +
   geom_boxplot(width = 0.5, outlier.shape = NA, alpha = 0.8) +
   facet_wrap(~ season) +
   scale_fill_viridis_d(option = "D") +
@@ -390,8 +387,6 @@ box_jitter_plot <- ggplot(social_emotional_data, aes(x = age_group, y = percent_
         axis.text.x = element_text(angle = 45, hjust = 1))
 
 ggsave("2018_19_boxplot_seasons.jpeg", path = "../memo")
-
-box_jitter_plot
 ```
 
 ## 4. Data Ethics Review
