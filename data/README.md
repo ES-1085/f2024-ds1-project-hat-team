@@ -4,7 +4,9 @@
 HS_2018_19_data <- read_csv(file = "data/HS_2018_19_data.csv")
 ```
 
-## HS_2018_19_data
+This data set has 12 columns and 453 observations.
+
+## HS_2018_19_data.csv
 
 - `category`: Developmental area being assessed (e.g., Social-Emotional, Cognitive, etc.).
 - `bottom`: Lower bound of the assessment scale range for expectations.
