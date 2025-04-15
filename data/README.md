@@ -1,16 +1,18 @@
 # data
 
-Place data file(s) in this folder.
+```{r}
+HS_2018_19_data <- read_csv(file = "data/HS_2018_19_data.csv")
+```
 
-```{r
-FWSdata <- read_csv(file = "data-raw/nobel.csv")}
+## HS_2018_19_data
 
-Then, include codebooks (variables, and their descriptions) for your data file(s)
-using the following format.
-
-## name of data file
-
-- `variable1`: Description of variable 1
-- `variable2`: Description of variable 2
-- `variable3`: Description of variable 3
-- ...
+- `category`: Developmental area being assessed (e.g., Social-Emotional, Cognitive, etc.).
+- `bottom`: Lower bound of the assessment scale range for expectations.
+- `top`: Upper bound of the assessment scale range for expectations.
+- `number_children`: Number of children in a group or observation.
+- `average`: Average assessment score for the group.
+- `number_below`: 
+- `percent_below`: 
+- `number_meeting_exceeding`: 
+- `percent_meeting_exceeding`: 
+- `season`: 
