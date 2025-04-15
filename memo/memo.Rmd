@@ -13,13 +13,12 @@ library(broom)
 
 ## Data Clean Up Steps for Overall Data
 
-### Step 1: _________
+### Step 1:
+The original data for this project came from a Google Sheet that was exported to Excel. It was extremely difficult to work with in R due to its inconsistent formatting. Each age group (3–4 and 4–5 year olds) had its own sheet, and within those sheets, data for Fall, Winter, and Spring was spread across different sections horizontally. The formatting included missing category labels, merged cells, and non-data rows like headers and expectation labels, all of which made direct analysis impossible without extensive cleaning.
 
-```{r}
+To prepare the data for analysis, we followed a multi-step cleaning process for each age group and each season. First, we read in the data using precise Excel cell ranges to isolate each seasonal block. We used the janitor::clean_names() function to standardize column names and made manual corrections to ensure all rows had appropriate category labels. We removed rows that contained labels rather than actual data, such as "Threes", "Bottom", or "Widely Held Expectations". The missing values in the "category" column were filled downward to maintain consistency. We added new columns to tag each observation by season, academic year, and age group. We then converted key fields to numeric values and replaced any remaining missing entries with zeros to ensure all values could be used in calculations. These steps were applied separately to each seasonal data block, and the cleaned datasets were combined into two master datasets—one for each age group—and finally merged into a single dataset called HS_2018_19_data.
 
-```
 
-### Step 2: ________
 
 ## Plots
 

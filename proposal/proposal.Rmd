@@ -134,8 +134,6 @@ spring_2018_19_data[is.na(spring_2018_19_data)] <- 0
 
 ```{r 3-4-18-19-data-joining}
 data_3_4_2018_19 <- rbind(fall_2018_19_data, winter_2018_19_data, spring_2018_19_data)
-
-write.csv(data_2018_19, "../data/3_4_2018_19_final_data.csv")
 ```
 
 ```{r 4-5-fall-data-cleanup}
@@ -261,8 +259,6 @@ spring_4_5_2018_19_data[is.na(spring_4_5_2018_19_data)] <- 0
 
 ```{r 4-5-18-19-data-joining}
 data_4_5_2018_19 <- rbind(fall_4_5_2018_19_data, winter_4_5_2018_19_data, spring_4_5_2018_19_data)
-
-write.csv(data_4_5_2018_19, "../data/4_5_2018_19_final_data.csv")
 ```
 
 
@@ -279,48 +275,49 @@ In our categories that we are analyzing, we will be looking at how the percentag
 
 Our data still requires a lot of cleaning, so we do not have any preliminary visualizations. However, just by looking at the raw data, we notice some positive trends in students meeting/exceeding expectations throughout the school year.
 
-```{r totals-by-season}
-data_2018_19$season <- fct_relevel(data_2018_19$season, "Fall", "Winter", "Spring")
+```{r means-by-season, fig.alt="Line plot showing the mean percent of 3–5 year olds meeting or exceeding expectations across Fall, Winter, and Spring 2018–19, broken down by developmental categories. Each category (such as Cognitive, Language, and Social-Emotional) is represented by a separate colored line using a colorblind-friendly viridis palette. Points mark the seasonal means for each category, showing overall upward trends across the year in most categories."}
+HS_2018_19_data$season <- fct_relevel(HS_2018_19_data$season, "Fall", "Winter", "Spring")
 
-ggplot(data_2018_19, aes(x = season, y = percent_meeting_exceeding, group = category, color = category)) +
+ggplot(HS_2018_19_data, aes(x = season, y = percent_meeting_exceeding, group = category, color = category)) +
   stat_summary(fun = "mean", geom = "line", linewidth = 1.2) +  # Line for each category
   stat_summary(fun = "mean", geom = "point", linewidth = 3) +  # Points to highlight means
-  labs(title = "Trend of Percent Meeting/Exceeding Expectations by Category", 
-       subtitle = "Across 2018-19 Seasons", 
+  labs(title = "3-5 Year Olds Percent Meeting/Exceeding Expectations", 
+       subtitle = "All Categories Across 2018-19 Seasons", 
        x = "Season", 
        y = "Percent Meeting/Exceeding") +
-  scale_color_brewer(palette = "Set2") +  # Aesthetic color palette
+  scale_color_viridis_d() + 
   theme_minimal() + 
   theme(axis.text.x = element_text(angle = 45, hjust = 1), 
         legend.title = element_blank())
 
-ggsave("season_trend_2018_19.jpeg", path = "../data")
+ggsave("season_trend_2018_19.jpeg", path = "../memo")
 ```
 
 
-```{r social-emotional-individuals}
+```{r social-emotional-individuals, fig.alt="Scatterplot with a smooth LOESS trend line showing the percent of 3–5 year old students meeting or exceeding social-emotional expectations in Fall, Winter, and Spring of 2018–19. Individual group observations are plotted as viridis-colored dots. The trend increases slightly across the seasons."}
 library(dplyr)
+library(viridis)
 
 # Filter for only the "Social-Emotional" category
-social_emotional_data <- data_2018_19 %>% 
+social_emotional_data <- HS_2018_19_data %>% 
   filter(category == "Social-Emotional")
 
 # Relevel the season factor
 social_emotional_data$season <- fct_relevel(social_emotional_data$season, "Fall", "Winter", "Spring")
 
+# Use viridis color
+point_color <- viridis(1, option = "D")  # Option "D" is the default and colorblind safe
+
 # Plot
 ggplot(social_emotional_data, aes(x = season, y = percent_meeting_exceeding)) +
-  geom_jitter(width = 0.2, size = 2, alpha = 0.7, color = "#66c2a5") +
-  geom_smooth(aes(group = 1), method = "loess", se = TRUE, color = "black", fill = "darkgrey", linewidth = 1.2) +
-  labs(title = "Group Observations of 3-4 Year Olds in Head Start Program", 
+  geom_jitter(width = 0.2, size = 2, alpha = 0.7, color = point_color) +
+  geom_smooth(aes(group = 1), method = "loess", se = TRUE, color = "black", fill = "grey70", linewidth = 1.2) +
+  labs(title = "Group Observations of 3-5 Year Olds in Head Start Program", 
        subtitle = "Social-Emotional Category Across 2018-19 Seasons", 
        x = "Season", 
        y = "Percent Meeting/Exceeding") +
   theme_minimal() + 
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
-
-# Save the plot
-ggsave("social_emotional_3_4_individuals_trend_2018_19.jpeg", path = "../data")
 ```
 
 ```{r HS-2018-19-SE-plot}
@@ -342,12 +339,9 @@ ggplot(social_emotional_data, aes(x = season, y = percent_meeting_exceeding)) +
        color = "Age Group") +
   theme_minimal() + 
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
-
-# Save the plot
-ggsave("social_emotional_age_group_trend_2018_19.jpeg", path = "../data")
 ```
 
-```{r line-and-box-plots}
+```{r line-plot, fig.alt="Line plot showing seasonal trends in social-emotional development scores for 3–4 and 4–5 year olds in the 2018–19 Head Start program. The x-axis shows seasons (Fall, Winter, Spring), and the y-axis shows the percent of students meeting or exceeding expectations. Two colored lines represent each age group using viridis colorblind-safe hues. Both groups show a general increase in scores across the year. The 3-4 age group shows higher social-emotional scores through all three seasons."}
 # Filter for only the "Social-Emotional" category
 social_emotional_data <- HS_2018_19_data %>%
   filter(category == "Social-Emotional")
@@ -360,6 +354,7 @@ line_plot <- ggplot(social_emotional_data, aes(x = season, y = percent_meeting_e
                                                group = age_group, color = age_group)) +
   stat_summary(fun = mean, geom = "line", linewidth = 1.2) +
   stat_summary(fun = mean, geom = "point", size = 3) +
+  scale_color_viridis_d(option = "D") +
   labs(title = "Trend of Head Start Program Social-Emotional Scores",
        subtitle = "Mean Percent Meeting/Exceeding Expectations (2018-19) by Season and Age Group",
        x = "Season", y = "Percent Meeting/Exceeding",
@@ -367,12 +362,25 @@ line_plot <- ggplot(social_emotional_data, aes(x = season, y = percent_meeting_e
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
-ggsave("2018_19_3_4_vs_4_5_line_plot.jpeg", path = "../data")
+ggsave("2018_19_3_4_vs_4_5_line_plot.jpeg", path = "../memo")
+
+line_plot
+
+```
+```{r box-plot, fig.alt="Faceted boxplot showing the distribution of social-emotional scores by age group across Fall, Winter, and Spring of 2018–19. The x-axis shows age groups (3–4 and 4–5), and the y-axis shows percent meeting or exceeding expectations. Each panel represents a season. Boxplots use viridis colors and show central tendency and variability within each group-season pair. Once again, the 3-4 age group shows higher social-emotional scores overall."}
+
+# Filter for only the "Social-Emotional" category
+social_emotional_data <- HS_2018_19_data %>%
+  filter(category == "Social-Emotional")
+
+# Relevel season factor
+social_emotional_data$season <- fct_relevel(social_emotional_data$season, "Fall", "Winter", "Spring")
 
 # --- Plot 2: Faceted Boxplot with Jittered Points ---
 box_jitter_plot <- ggplot(social_emotional_data, aes(x = age_group, y = percent_meeting_exceeding, fill = age_group)) +
   geom_boxplot(width = 0.5, outlier.shape = NA, alpha = 0.8) +
   facet_wrap(~ season) +
+  scale_fill_viridis_d(option = "D") +
   labs(title = "Distribution of Head Start Program Social-Emotional Scores",
        subtitle = "Percent Meeting/Exceeding Expectations (2018-19) by Season and Age Group",
        x = "Age Group", y = "Percent Meeting/Exceeding",
@@ -381,13 +389,10 @@ box_jitter_plot <- ggplot(social_emotional_data, aes(x = age_group, y = percent_
   theme(strip.text = element_text(face = "bold"),
         axis.text.x = element_text(angle = 45, hjust = 1))
 
-ggsave("2018_19_boxplot_seasons.jpeg", path = "../data")
+ggsave("2018_19_boxplot_seasons.jpeg", path = "../memo")
 
-line_plot
 box_jitter_plot
-
 ```
-
 
 ## 4. Data Ethics Review
 
