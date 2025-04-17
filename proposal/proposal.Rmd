@@ -391,4 +391,4 @@ ggsave("2018_19_boxplot_seasons.jpeg", path = "../memo")
 
 ## 4. Data Ethics Review
 
-The data ethics review section will be introduced in a separate class and is not part of the original proposal deadline.
+One ethical concern in our project involves the presence of sensitive information, such as a data file that includes the names of students in the program. Including identifying details like this could potentially cause harm, particularly because the dataset involves young participants. To minimize risks, we should be careful to include only information that is directly relevant and avoid anything that could be used to identify individuals. Additionally, it's important to recognize that while we can observe patterns in student development through the data, these numbers represent real people.
