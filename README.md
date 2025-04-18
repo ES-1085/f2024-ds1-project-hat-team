@@ -38,12 +38,8 @@ A link to the code and how we created our graphics in our memo can be found [her
 
 ## Data
 
-Include a citation for your data here. See
-<http://libraryguides.vu.edu.au/c.php?g=386501&p=4347840> for guidance
-on proper citation for datasets. If you got your data off the web, make
-sure to note the retrieval date.
+Promise Early Education, 2019, "2018-2019 TSG Comparative FWS  (Pre-COVID) deidentified for BATES"", Google Sheets, 18 April 2025
 
 ## References
 
-List any references here. You should, at a minimum, list your data
-source.
+Promise Early Education
