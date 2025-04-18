@@ -27,12 +27,9 @@ The third graph is a set of box plots showing the distribution of social-emotion
 
 All three graphs collectively support the idea that Promise’s programming effectively fosters growth across developmental domains, particularly in social-emotional learning.
 
-
 Age-based trends reveal not just outcomes but structural expectations: younger children may appear to do better because they are assessed on more age-appropriate WHE (Widely Held Expectations).
 
-
 The convergence in later seasons suggests intervention is effective regardless of starting point.
-
 
 #### What We Missed 
 These graphs do not differentiate between dual-language learners, special education status, or duration of enrollment—factors central to Promise’s core evaluation goals.
