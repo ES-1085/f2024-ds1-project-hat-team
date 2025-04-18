@@ -30,7 +30,7 @@ Disaggregating outcomes by these dimensions in future work could offer more acti
 
 ## Handout
 
-Our presentation can be found [here](handout/handout.pdf). You can update the filename and extension of your handout.
+Our presentation can be found [here](https://github.com/ES-1085/f2024-ds1-project-hat-team/raw/main/HATteam_handout.pdf).
 
 ## Memo
 
